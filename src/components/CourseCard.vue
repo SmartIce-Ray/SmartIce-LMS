@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Play } from 'lucide-vue-next'
+import { Clock } from 'lucide-vue-next'
 
 interface Props {
   id: number
@@ -26,25 +26,27 @@ const emit = defineEmits<{
 
 <template>
   <div
-    class="bg-card rounded-xl border border-border overflow-hidden cursor-pointer transition-all duration-200 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+    class="bg-card rounded-xl border border-border overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:rotate-[-1deg] hover:shadow-lg hover:border-primary/30 active:scale-[0.98]"
     @click="emit('click', id)"
   >
     <!-- 封面图 -->
-    <div class="relative aspect-video bg-muted">
+    <div class="relative aspect-video bg-muted overflow-hidden">
       <img
         v-if="coverUrl"
         :src="coverUrl"
         :alt="title"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
       />
       <div v-else class="w-full h-full flex items-center justify-center">
-        <Play class="w-12 h-12 text-muted-foreground/30" />
+        <svg class="w-12 h-12 text-muted-foreground/30" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
       </div>
 
       <!-- 分类标签 -->
       <div
         v-if="category"
-        class="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium bg-black/60 text-white backdrop-blur-sm"
+        class="absolute top-2 left-2 px-2 py-1 rounded text-xs font-semibold bg-primary/90 text-primary-foreground backdrop-blur-sm"
       >
         {{ category }}
       </div>
@@ -75,17 +77,20 @@ const emit = defineEmits<{
 
     <!-- 信息区 -->
     <div class="p-3">
-      <h3 class="font-semibold text-foreground text-sm line-clamp-2 mb-1">
+      <h3 class="font-semibold text-foreground text-sm line-clamp-2 mb-2 h-10">
         {{ title }}
       </h3>
-      <p class="text-xs text-muted-foreground">
-        <template v-if="progress > 0">
-          {{ completedLessons }}/{{ totalLessons }} 节 · {{ progress }}%
-        </template>
-        <template v-else>
-          共 {{ totalLessons }} 节
-        </template>
-      </p>
+      <div class="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <Clock class="w-3.5 h-3.5" />
+        <span>
+          <template v-if="progress > 0">
+            {{ completedLessons }}/{{ totalLessons }} 节
+          </template>
+          <template v-else>
+            共 {{ totalLessons }} 节
+          </template>
+        </span>
+      </div>
     </div>
   </div>
 </template>

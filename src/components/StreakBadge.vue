@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Flame } from 'lucide-vue-next'
-
 interface Props {
   days?: number
 }
@@ -13,11 +11,11 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div
     v-if="days > 0"
-    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30"
+    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[var(--bg-tertiary)] to-[#FFE4CC] border border-primary/20 shadow-sm"
   >
-    <Flame class="w-5 h-5 text-orange-500 animate-pulse" />
-    <span class="text-sm font-semibold text-orange-400">
-      连续学习 {{ days }} 天
+    <span class="text-lg animate-flame">🔥</span>
+    <span class="text-sm font-semibold text-primary">
+      {{ days }}天连胜
     </span>
   </div>
 </template>

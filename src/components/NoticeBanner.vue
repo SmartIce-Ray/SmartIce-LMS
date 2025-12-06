@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Megaphone, ChevronRight } from 'lucide-vue-next'
+import { ChevronRight } from 'lucide-vue-next'
 
 interface Notice {
   id: number
@@ -21,19 +21,27 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div
+  <button
     v-if="notices.length > 0"
-    class="bg-card/50 rounded-xl px-4 py-3 border border-border flex items-center gap-3 cursor-pointer hover:bg-card transition-colors"
+    class="w-full bg-[var(--bg-secondary)] rounded-lg px-4 py-3 border-l-4 border-primary flex items-center gap-3 cursor-pointer hover:bg-[var(--bg-tertiary)] hover:translate-x-1 transition-all duration-200 group"
     @click="emit('click', notices[0])"
   >
-    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-      <Megaphone class="w-4 h-4 text-primary" />
-    </div>
-    <div class="flex-1 min-w-0">
-      <p class="text-sm text-foreground truncate">
-        {{ notices[0].title }}
-      </p>
-    </div>
-    <ChevronRight class="w-4 h-4 text-muted-foreground flex-shrink-0" />
-  </div>
+    <svg
+      class="w-5 h-5 text-primary flex-shrink-0 animate-ring"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+    </svg>
+    <span class="flex-1 text-left text-sm text-muted-foreground font-medium truncate">
+      {{ notices[0].title }}
+    </span>
+    <ChevronRight class="w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary" />
+  </button>
 </template>

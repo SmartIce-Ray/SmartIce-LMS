@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { BookOpen, Award, Clock } from 'lucide-vue-next'
-
 interface Props {
   completedCourses?: number
   passedExams?: number
@@ -17,30 +15,36 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div class="grid grid-cols-3 gap-3">
     <!-- 完成课程 -->
-    <div class="bg-card rounded-xl p-4 border border-border flex flex-col items-center">
-      <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-        <BookOpen class="w-5 h-5 text-primary" />
-      </div>
-      <span class="text-2xl font-bold text-foreground">{{ completedCourses }}</span>
-      <span class="text-xs text-muted-foreground">完成课程</span>
+    <div
+      class="stat-card bg-card rounded-xl p-4 border border-border flex flex-col items-center relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 animate-fade-in-up animation-delay-100 animation-fill-both"
+    >
+      <div class="stat-top-bar absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 transition-opacity duration-300" />
+      <span class="text-2xl font-bold gradient-text mb-1">{{ completedCourses }}</span>
+      <span class="text-xs text-muted-foreground font-medium">完成课程</span>
     </div>
 
     <!-- 通过考试 -->
-    <div class="bg-card rounded-xl p-4 border border-border flex flex-col items-center">
-      <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center mb-2">
-        <Award class="w-5 h-5 text-success" />
-      </div>
-      <span class="text-2xl font-bold text-foreground">{{ passedExams }}</span>
-      <span class="text-xs text-muted-foreground">通过考试</span>
+    <div
+      class="stat-card bg-card rounded-xl p-4 border border-border flex flex-col items-center relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 animate-fade-in-up animation-delay-200 animation-fill-both"
+    >
+      <div class="stat-top-bar absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 transition-opacity duration-300" />
+      <span class="text-2xl font-bold gradient-text mb-1">{{ passedExams }}</span>
+      <span class="text-xs text-muted-foreground font-medium">通过考试</span>
     </div>
 
     <!-- 学习时长 -->
-    <div class="bg-card rounded-xl p-4 border border-border flex flex-col items-center">
-      <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-2">
-        <Clock class="w-5 h-5 text-secondary" />
-      </div>
-      <span class="text-2xl font-bold text-foreground">{{ learningHours }}</span>
-      <span class="text-xs text-muted-foreground">学习时长</span>
+    <div
+      class="stat-card bg-card rounded-xl p-4 border border-border flex flex-col items-center relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 animate-fade-in-up animation-delay-300 animation-fill-both"
+    >
+      <div class="stat-top-bar absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 transition-opacity duration-300" />
+      <span class="text-2xl font-bold gradient-text mb-1">{{ learningHours }}h</span>
+      <span class="text-xs text-muted-foreground font-medium">学习时长</span>
     </div>
   </div>
 </template>
+
+<style scoped>
+.stat-card:hover .stat-top-bar {
+  opacity: 1;
+}
+</style>

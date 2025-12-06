@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ChevronRight } from 'lucide-vue-next'
 import CourseCard from './CourseCard.vue'
 
 interface Course {
@@ -34,21 +33,27 @@ const emit = defineEmits<{
     <div class="flex items-center justify-between">
       <h2 class="text-lg font-bold text-foreground">{{ title }}</h2>
       <button
-        class="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+        class="text-sm text-muted-foreground hover:text-primary font-medium transition-colors"
         @click="emit('more')"
       >
-        更多
-        <ChevronRight class="w-4 h-4" />
+        查看全部
       </button>
     </div>
 
     <!-- 横向滚动课程列表 -->
     <div class="relative -mx-4 px-4">
-      <div class="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
+      <div
+        class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+        role="list"
+        tabindex="0"
+        aria-label="可左右滑动查看更多课程"
+      >
         <div
-          v-for="course in courses"
+          v-for="(course, index) in courses"
           :key="course.id"
-          class="flex-shrink-0 w-40 snap-start"
+          class="flex-shrink-0 w-[200px] snap-start animate-fade-in-right animation-fill-both"
+          :class="`animation-delay-${(index + 6) * 100}`"
+          role="listitem"
         >
           <CourseCard
             v-bind="course"
@@ -69,11 +74,17 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-.scrollbar-hide {
+/* 隐藏滚动条 */
+div[role="list"] {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.scrollbar-hide::-webkit-scrollbar {
+div[role="list"]::-webkit-scrollbar {
   display: none;
+}
+
+/* 滚动吸附优化 */
+div[role="list"] {
+  scroll-padding: 0 1rem;
 }
 </style>
