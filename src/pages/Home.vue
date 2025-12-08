@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useNotificationStore } from '@/stores/notification'
 import { Bell } from 'lucide-vue-next'
 import StatsCard from '@/components/StatsCard.vue'
 import StreakBadge from '@/components/StreakBadge.vue'
@@ -11,6 +12,7 @@ import PendingCourses from '@/components/PendingCourses.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const notificationStore = useNotificationStore()
 
 // Mock 数据 - 后续从 API 获取
 const userStats = ref({
@@ -59,6 +61,11 @@ function handleNoticeClick(notice: { id: number; title: string }) {
 function goToMessages() {
   router.push('/messages')
 }
+
+// 加载通知数据
+onMounted(() => {
+  notificationStore.fetchNotifications()
+})
 </script>
 
 <template>
@@ -78,7 +85,13 @@ function goToMessages() {
           @click="goToMessages"
         >
           <Bell class="w-6 h-6 text-muted-foreground" />
-          <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full animate-notification-pulse" />
+          <!-- 未读数量角标 -->
+          <span
+            v-if="notificationStore.unreadCount > 0"
+            class="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1.5 flex items-center justify-center bg-primary text-primary-foreground text-xs font-bold rounded-full animate-notification-pulse"
+          >
+            {{ notificationStore.unreadCount > 99 ? '99+' : notificationStore.unreadCount }}
+          </span>
         </button>
       </div>
 

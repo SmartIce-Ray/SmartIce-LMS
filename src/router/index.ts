@@ -11,6 +11,20 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: false }
   },
 
+  // 考试页面（无布局，全屏体验）
+  {
+    path: '/exams/:examId',
+    name: 'TakeExam',
+    component: () => import('@/pages/exams/TakeExam.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/exams/:examId/result/:attemptId',
+    name: 'ExamResult',
+    component: () => import('@/pages/exams/ExamResult.vue'),
+    meta: { requiresAuth: true }
+  },
+
   // 需要认证的页面（使用主布局）
   {
     path: '/',
@@ -24,12 +38,12 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'courses',
-        name: 'courses',
+        name: 'Courses',
         component: () => import('@/pages/courses/CourseList.vue')
       },
       {
         path: 'courses/:id',
-        name: 'course-detail',
+        name: 'CourseDetail',
         component: () => import('@/pages/courses/CourseDetail.vue')
       },
       {

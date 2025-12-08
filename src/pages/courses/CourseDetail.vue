@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ArrowLeft, Play, Clock, BookOpen, ChevronDown, Check, Video, FileText, CheckSquare } from 'lucide-vue-next'
+import { ArrowLeft, Play, Clock, BookOpen, ChevronDown, Check, Video, FileText, CheckSquare, FileQuestion, Trophy } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
+import { useExamStore } from '@/stores/exam'
+import ExamCard from '@/components/exam/ExamCard.vue'
 
 interface Lesson {
   id: number
@@ -33,6 +35,9 @@ interface CourseDetail {
 
 const route = useRoute()
 const router = useRouter()
+const examStore = useExamStore()
+
+const courseId = computed(() => Number(route.params.id) || 1)
 
 // Mock 数据
 const course = ref<CourseDetail>({
@@ -139,6 +144,28 @@ function startLearning() {
   // 如果全部完成，从头开始
   router.push(`/courses/${course.value.id}/learn`)
 }
+
+// 考试相关
+function handleStartExam(examId: number) {
+  router.push({ name: 'TakeExam', params: { examId } })
+}
+
+function handleViewResult(attemptId: number) {
+  if (examStore.courseExam) {
+    router.push({
+      name: 'ExamResult',
+      params: {
+        examId: examStore.courseExam.id,
+        attemptId
+      }
+    })
+  }
+}
+
+// 加载考试数据
+onMounted(() => {
+  examStore.fetchExamByCourse(courseId.value)
+})
 </script>
 
 <template>
@@ -205,6 +232,21 @@ function startLearning() {
         <Play class="w-5 h-5 mr-2" />
         {{ course.progress > 0 ? '继续学习' : '开始学习' }}
       </Button>
+    </div>
+
+    <!-- 课程考试 -->
+    <div v-if="examStore.courseExam" class="p-4 border-b border-border">
+      <div class="flex items-center gap-2 mb-4">
+        <FileQuestion class="w-5 h-5 text-primary" />
+        <h3 class="text-lg font-bold text-foreground">课程考试</h3>
+      </div>
+      <ExamCard
+        :exam="examStore.courseExam"
+        :attempts="examStore.courseExamAttempts"
+        :best-score="examStore.courseExamBestScore"
+        @start="handleStartExam"
+        @view-result="handleViewResult"
+      />
     </div>
 
     <!-- 章节目录 -->
