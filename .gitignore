@@ -33,3 +33,6 @@ dist-ssr
 
 # 测试结果
 test-results/
+
+# Design Sprint 临时文件
+.design-sprint-staging/
