@@ -1,5 +1,33 @@
-# Vue 3 + TypeScript + Vite
+# SmartIce LMS
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+有点东西餐饮集团培训管理系统
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 项目结构
+
+| 目录 | 说明 | 负责人 |
+|-----|------|-------|
+| lms-frontend/ | 前端 (Vue 3) | SmartIce-Ray |
+| lms-backend/ | 后端 (FastAPI) | JeremyDong22 |
+
+## 技术栈
+
+- **前端**: Vue 3 + Vite + shadcn-vue + Tailwind CSS
+- **后端**: Python + FastAPI + SQLAlchemy
+- **数据库**: PostgreSQL
+
+## 开发指南
+
+### 前端
+
+```bash
+cd lms-frontend
+pnpm install
+pnpm dev
+```
+
+### 后端
+
+```bash
+cd lms-backend
+# 待 JeremyDong22 添加
+```
